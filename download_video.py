@@ -11,8 +11,6 @@ def download_video(link, file_type):
         return False
     else:
         if file_type == "video":
-            streams = yt.streams.filter(progressive=True)
-            itag = streams[0].itag
             stream = yt.streams.get_highest_resolution()
             stream.download("./videos")
             return True
@@ -26,15 +24,14 @@ def download_video(link, file_type):
 def MP4toMP3():
     mp4_files = os.listdir("./audios")
     for file in mp4_files:
-        new_filename = file.split("mp4")[0] + "mp3"
+        mp3_filename = file.split("mp4")[0] + "mp3"
         filename = f"audios/{file}"
         file_to_convert = AudioFileClip(filename)
-        mp3_path = f"mp3/{new_filename}"
+        mp3_path = f"mp3/{mp3_filename}"
         file_to_convert.write_audiofile(mp3_path)
         file_to_convert.close()
-        # os.remove(filename)
-        
-        
+
+
 def delete_mp4_audio_files():
     mp4_files = os.listdir("./audios")
     for file in mp4_files:
