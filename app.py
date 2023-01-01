@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, flash, redirect
-from download_video import download_video
+from download_video import download_video, delete_mp4_audio_files
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "hello"
@@ -24,6 +24,13 @@ def index():
         return redirect("/")
     return render_template('index.html')
 
+
+
+@app.route('/delete-mp4', methods=["POST"])
+def method_name():
+    delete_mp4_audio_files()
+    flash("OK", category="success")
+    return redirect("/")
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5000, debug=True)

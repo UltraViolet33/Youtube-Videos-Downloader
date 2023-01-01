@@ -1,5 +1,8 @@
 from pytube import *
 from pytube.exceptions import RegexMatchError
+import os
+from moviepy.editor import *
+
 
 def download_video(link, file_type):
     try:
@@ -8,14 +11,31 @@ def download_video(link, file_type):
         return False
     else:
         if file_type == "video":
-            
             streams = yt.streams.filter(progressive=True)
             itag = streams[0].itag
             stream = yt.streams.get_highest_resolution()
             stream.download("./videos")
             return True
         elif file_type == "audio":
+            yt = YouTube(link, on_complete_callback=MP4toMP3())
             stream = yt.streams.get_audio_only()
-            print(stream)
             stream.download("./audios")
             return True
+
+
+def MP4toMP3():
+    mp4_files = os.listdir("./audios")
+    for file in mp4_files:
+        new_filename = file.split("mp4")[0] + "mp3"
+        filename = f"audios/{file}"
+        file_to_convert = AudioFileClip(filename)
+        mp3_path = f"mp3/{new_filename}"
+        file_to_convert.write_audiofile(mp3_path)
+        file_to_convert.close()
+        # os.remove(filename)
+        
+        
+def delete_mp4_audio_files():
+    mp4_files = os.listdir("./audios")
+    for file in mp4_files:
+        os.remove(f"audios/{file}")
