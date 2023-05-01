@@ -15,13 +15,15 @@ def download_video(link, file_type):
             stream.download("./videos")
             return True
         elif file_type == "audio":
-            yt = YouTube(link, on_complete_callback=MP4toMP3())
+            yt = YouTube(link, use_oauth=True, allow_oauth_cache=True,
+                         on_complete_callback=MP4toMP3())
             stream = yt.streams.get_audio_only()
             stream.download("./audios")
             return True
 
 
 def MP4toMP3():
+    print('ok')
     mp4_files = os.listdir("./audios")
     for file in mp4_files:
         mp3_filename = file.split("mp4")[0] + "mp3"
