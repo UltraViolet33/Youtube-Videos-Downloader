@@ -4,18 +4,8 @@ Little web Flask application to download youtube videos
 
 You can download a youtube video from its links. Choose video (mp4) or audio (mp4 or mp3)
 
-You need to install Flask, pytube and moviepy
-
 ```
-pip install Flask
-```
-
-```
-pip install moviepy
-```
-
-```
-pip install pytube
+pip install -r requirements.txt
 ```
 
 To run the project
